@@ -104,6 +104,9 @@
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.2px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
     }
 
     h1 {
@@ -404,6 +407,80 @@
       font-weight: 700;
     }
 
+
+    .love-modal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(34, 20, 26, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      z-index: 10001;
+    }
+
+    .love-modal.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .love-modal-card {
+      width: min(100%, 420px);
+      padding: 24px 22px 20px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+      text-align: center;
+      transform: translateY(10px) scale(0.98);
+      transition: transform 0.25s ease;
+    }
+
+    .love-modal.show .love-modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .love-modal-title {
+      margin: 0 0 10px;
+      font-size: 28px;
+      color: var(--primary);
+      line-height: 1.25;
+    }
+
+    .love-modal-text {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .love-modal-actions {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .love-modal-button {
+      min-width: 110px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(230, 61, 94, 0.2);
+    }
+
+    .love-modal-button:hover {
+      transform: translateY(-1px);
+    }
+
     @keyframes fadeInDown {
       from {
         opacity: 0;
@@ -465,7 +542,7 @@
     <div class="container">
     <header class="hero">
       <div class="hero-content">
-        <div class="badge">🐶 Cún và Bé Hổ ❤️</div>
+        <button class="badge" id="loveBadge" type="button">🐶 Cún và Bé Hổ ❤️</button>
         <h1>Những khoảnh khắc đáng yêu của tụi mình</h1>
         <p class="love-text">Một góc nhỏ để lưu lại những tấm hình, thước phim và những điều ngọt ngào mà anh muốn giữ mãi cho riêng hai đứa.</p>
       </div>
@@ -576,11 +653,23 @@
   </div>
   </div>
 
+
+  <div class="love-modal" id="loveModal" aria-hidden="true">
+    <div class="love-modal-card" role="dialog" aria-modal="true" aria-labelledby="loveModalTitle">
+      <h3 class="love-modal-title" id="loveModalTitle">Em yêu ơi</h3>
+      <p class="love-modal-text" id="loveModalText"></p>
+      <div class="love-modal-actions">
+        <button class="love-modal-button" id="loveModalButton" type="button">Em biết rồi ❤️</button>
+      </div>
+    </div>
+  </div>
+
   <script>
 
     const correctAnswer = 'Kim Thị Xuân Đào';
     const normalizedCorrectAnswer = normalizeAnswer(correctAnswer);
 
+    const loveBadge = document.getElementById('loveBadge');
     const lockScreen = document.getElementById('lockScreen');
     const pageContent = document.getElementById('pageContent');
     const answerInput = document.getElementById('answerInput');
@@ -591,6 +680,9 @@
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxClose = document.getElementById('lightboxClose');
+    const loveModal = document.getElementById('loveModal');
+    const loveModalText = document.getElementById('loveModalText');
+    const loveModalButton = document.getElementById('loveModalButton');
 
     function normalizeAnswer(value) {
       return value
@@ -602,6 +694,18 @@
         .toLowerCase()
         .replace(/\s+/g, ' ');
     }
+
+    function calculateLoveDays() {
+      const startDate = new Date(2024, 1, 12); // 12/02/2024
+      const today = new Date();
+
+      startDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      const diffTime = today - startDate;
+      return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    }
+
 
     function unlockPage() {
       const userAnswer = normalizeAnswer(answerInput.value);
@@ -622,6 +726,35 @@
     document.body.style.overflow = 'hidden';
 
     unlockButton.addEventListener('click', unlockPage);
+
+    function openLoveModal(message) {
+      loveModalText.textContent = message;
+      loveModal.classList.add('show');
+      loveModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLoveModal() {
+      loveModal.classList.remove('show');
+      loveModal.setAttribute('aria-hidden', 'true');
+
+      if (!lightbox.classList.contains('show')) {
+        document.body.style.overflow = pageContent.hidden ? 'hidden' : 'auto';
+      }
+    }
+
+    loveBadge.addEventListener('click', () => {
+      const days = calculateLoveDays();
+      openLoveModal(`Tụi mình đã bên nhau được ${days} ngày rồi đó ❤️`);
+    });
+
+    loveModalButton.addEventListener('click', closeLoveModal);
+
+    loveModal.addEventListener('click', event => {
+      if (event.target === loveModal) {
+        closeLoveModal();
+      }
+    });
 
     answerInput.addEventListener('keydown', event => {
       if (event.key === 'Enter') {
@@ -677,8 +810,14 @@
     });
 
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && lightbox.classList.contains('show')) {
-        closeImage();
+      if (event.key === 'Escape') {
+        if (lightbox.classList.contains('show')) {
+          closeImage();
+        }
+
+        if (loveModal.classList.contains('show')) {
+          closeLoveModal();
+        }
       }
     });
 
