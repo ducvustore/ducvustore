@@ -92,12 +92,21 @@
       z-index: 1;
     }
 
-    .badge {
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .badge,
+    .gift-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 10px 16px;
-      margin-bottom: 18px;
       border-radius: 999px;
       background: rgba(255, 77, 109, 0.1);
       color: var(--primary-dark);
@@ -107,6 +116,14 @@
       border: none;
       cursor: pointer;
       font-family: inherit;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .badge:hover,
+    .gift-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(255, 77, 109, 0.12);
+      background: rgba(255, 77, 109, 0.14);
     }
 
     h1 {
@@ -542,7 +559,10 @@
     <div class="container">
     <header class="hero">
       <div class="hero-content">
-        <button class="badge" id="loveBadge" type="button">🐶 Cún và Bé Hổ ❤️</button>
+        <div class="hero-actions">
+          <button class="badge" id="loveBadge" type="button">🐶 Cún và Bé Hổ ❤️</button>
+          <button class="gift-badge" id="giftBadge" type="button" aria-label="Mở lời chúc">🎁 Gói quà cho em</button>
+        </div>
         <h1>Những khoảnh khắc đáng yêu của tụi mình</h1>
         <p class="love-text">Một góc nhỏ để lưu lại những tấm hình, thước phim và những điều ngọt ngào mà anh muốn giữ mãi cho riêng hai đứa.</p>
       </div>
@@ -659,10 +679,16 @@
       <h3 class="love-modal-title" id="loveModalTitle">Em yêu ơi</h3>
       <p class="love-modal-text" id="loveModalText"></p>
       <div class="love-modal-actions">
-        <button class="love-modal-button" id="loveModalButton" type="button">Em biết rồi ❤️</button>
+        <button class="love-modal-button" id="loveModalButton" type="button">Dạ anh ❤️</button>
       </div>
     </div>
   </div>
+
+
+  <audio id="giftAudio" preload="auto">
+    <source src="Bản ghi mới.m4a" type="audio/mp4">
+    Trình duyệt của bạn không hỗ trợ phát âm thanh.
+  </audio>
 
   <script>
 
@@ -683,6 +709,8 @@
     const loveModal = document.getElementById('loveModal');
     const loveModalText = document.getElementById('loveModalText');
     const loveModalButton = document.getElementById('loveModalButton');
+    const giftBadge = document.getElementById('giftBadge');
+    const giftAudio = document.getElementById('giftAudio');
 
     function normalizeAnswer(value) {
       return value
@@ -727,7 +755,9 @@
 
     unlockButton.addEventListener('click', unlockPage);
 
-    function openLoveModal(message) {
+    function openLoveModal(message, title = 'Em yêu ơi') {
+      const loveModalTitle = document.getElementById('loveModalTitle');
+      loveModalTitle.textContent = title;
       loveModalText.textContent = message;
       loveModal.classList.add('show');
       loveModal.setAttribute('aria-hidden', 'false');
@@ -738,6 +768,11 @@
       loveModal.classList.remove('show');
       loveModal.setAttribute('aria-hidden', 'true');
 
+      if (giftAudio) {
+        giftAudio.pause();
+        giftAudio.currentTime = 0;
+      }
+
       if (!lightbox.classList.contains('show')) {
         document.body.style.overflow = pageContent.hidden ? 'hidden' : 'auto';
       }
@@ -746,6 +781,22 @@
     loveBadge.addEventListener('click', () => {
       const days = calculateLoveDays();
       openLoveModal(`Tụi mình đã bên nhau được ${days} ngày rồi đó ❤️`);
+    });
+
+    giftBadge.addEventListener('click', async () => {
+      openLoveModal(
+        'Chúc em đón Tết Chôl Chnăm Thmây thật nhiều niềm vui, bình an và hạnh phúc. Mong năm mới của em luôn ngập tràn tiếng cười, may mắn, anh luôn bên cạnh thương em thật nhiều.',
+        'Món quà nhỏ cho em'
+      );
+
+      if (giftAudio) {
+        try {
+          giftAudio.currentTime = 0;
+          await giftAudio.play();
+        } catch (error) {
+          console.warn('Không phát được audio quà tặng:', error);
+        }
+      }
     });
 
     loveModalButton.addEventListener('click', closeLoveModal);
