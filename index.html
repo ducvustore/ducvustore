@@ -1104,17 +1104,20 @@
     async function handleLike(itemId, socialBox) {
       const button = socialBox.querySelector('[data-role="like-button"]');
       const likeCountEl = socialBox.querySelector('[data-role="like-count"]');
-      const current = Number(likeCountEl.textContent) || 0;
 
       button.disabled = true;
 
-      const { error } = await supabaseClient
-        .from('media_likes')
-        .update({ like_count: current + 1 })
-        .eq('item_id', itemId);
+      const { data, error } = await supabaseClient.functions.invoke('add-like', {
+        body: {
+          item_id: itemId
+        }
+      });
 
-      if (!error) {
-        likeCountEl.textContent = current + 1;
+      if (error) {
+        const message = error.message || 'Anh bấm chậm lại chút nha ❤️';
+        console.warn('Lỗi add-like:', message);
+      } else if (data?.like_count !== undefined) {
+        likeCountEl.textContent = data.like_count;
       }
 
       button.disabled = false;
@@ -1150,7 +1153,7 @@
       });
 
       if (error) {
-        statusEl.textContent = 'Gửi chưa được rồi, mình thử lại một chút nhé.';
+        statusEl.textContent = error.message || 'Gửi chưa được rồi, mình thử lại một chút nhé.';
         statusEl.classList.add('error');
         submitButton.disabled = false;
         return;
