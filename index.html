@@ -1142,13 +1142,12 @@
       submitButton.disabled = true;
       statusEl.textContent = 'Đang gửi bình luận...';
 
-      const { error } = await supabaseClient
-        .from('media_comments')
-        .insert({
+      const { error } = await supabaseClient.functions.invoke('add-comment', {
+        body: {
           item_id: itemId,
-          author_name: 'Người thương',
           content
-        });
+        }
+      });
 
       if (error) {
         statusEl.textContent = 'Gửi chưa được rồi, mình thử lại một chút nhé.';
