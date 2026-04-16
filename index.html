@@ -296,6 +296,142 @@
       transform: rotate(90deg);
     }
 
+
+    .social-box {
+      padding: 14px 14px 16px;
+      border-top: 1px solid rgba(255, 77, 109, 0.08);
+      text-align: left;
+    }
+
+    .social-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .like-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 77, 109, 0.1);
+      color: var(--primary-dark);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .like-button:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 77, 109, 0.16);
+    }
+
+    .comment-count {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .comments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .comment-item {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 77, 109, 0.06);
+    }
+
+    .comment-author {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .comment-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .comment-empty {
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .comment-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .comment-input,
+    .comment-textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 77, 109, 0.18);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.96);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .comment-input:focus,
+    .comment-textarea:focus {
+      border-color: rgba(255, 77, 109, 0.55);
+      box-shadow: 0 0 0 4px rgba(255, 77, 109, 0.10);
+    }
+
+    .comment-textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .comment-submit {
+      justify-self: start;
+      padding: 11px 16px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(230, 61, 94, 0.18);
+    }
+
+    .comment-submit:disabled,
+    .like-button:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .comment-status {
+      min-height: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .comment-status.error {
+      color: #c92f52;
+      font-weight: 700;
+    }
+
     .footer-note {
       margin-top: 26px;
       padding: 16px 18px;
@@ -573,7 +709,7 @@
       <p class="section-desc">Mỗi tấm hình là một câu chuyện nhỏ. Bấm vào ảnh để xem lớn hơn nhé.</p>
 
       <div class="gallery">
-        <article class="item fade">
+        <article class="item fade" data-item-id="photo_1">
           <button class="item-button" type="button" data-image="https://drive.google.com/thumbnail?id=1QQr_Q-i4fzXH_zNzVJUgsENXbMi8CaaO&sz=w1200" aria-label="Xem ảnh kỷ niệm 1">
             <figure>
               <img src="https://drive.google.com/thumbnail?id=1QQr_Q-i4fzXH_zNzVJUgsENXbMi8CaaO&sz=w1200" alt="Khoảnh khắc kỷ niệm 1 của tụi mình" loading="lazy">
@@ -582,7 +718,7 @@
           </button>
         </article>
 
-        <article class="item fade">
+        <article class="item fade" data-item-id="photo_2">
           <button class="item-button" type="button" data-image="https://drive.google.com/thumbnail?id=18VaDnF36hI3gBdIFnjGBEmR748FIvyVI&sz=w1200" aria-label="Xem ảnh kỷ niệm 2">
             <figure>
               <img src="https://drive.google.com/thumbnail?id=18VaDnF36hI3gBdIFnjGBEmR748FIvyVI&sz=w1200" alt="Khoảnh khắc kỷ niệm 2 của tụi mình" loading="lazy">
@@ -591,7 +727,7 @@
           </button>
         </article>
 
-        <article class="item fade">
+        <article class="item fade" data-item-id="photo_3">
           <button class="item-button" type="button" data-image="https://drive.google.com/thumbnail?id=1oxJf8tM_gK6Tr0mEStu34_DkDdpFmXAY&sz=w1200" aria-label="Xem ảnh kỷ niệm 3">
             <figure>
               <img src="https://drive.google.com/thumbnail?id=1oxJf8tM_gK6Tr0mEStu34_DkDdpFmXAY&sz=w1200" alt="Khoảnh khắc kỷ niệm 3 của tụi mình" loading="lazy">
@@ -600,7 +736,7 @@
           </button>
         </article>
 
-        <article class="item fade">
+        <article class="item fade" data-item-id="photo_4">
           <button class="item-button" type="button" data-image="https://drive.google.com/thumbnail?id=1RDPjrs1n8QDDWEa06kQqlVkrF1E-CpRw&sz=w1200" aria-label="Xem ảnh kỷ niệm 4">
             <figure>
               <img src="https://drive.google.com/thumbnail?id=1RDPjrs1n8QDDWEa06kQqlVkrF1E-CpRw&sz=w1200" alt="Khoảnh khắc kỷ niệm 4 của tụi mình" loading="lazy">
@@ -609,7 +745,7 @@
           </button>
         </article>
 
-        <article class="item fade">
+        <article class="item fade" data-item-id="photo_5">
           <button class="item-button" type="button" data-image="https://drive.google.com/thumbnail?id=1N_IXact5T4CzYImroJnvBXxq-3U__k1z&sz=w1200" aria-label="Xem ảnh kỷ niệm 5">
             <figure>
               <img src="https://drive.google.com/thumbnail?id=1N_IXact5T4CzYImroJnvBXxq-3U__k1z&sz=w1200" alt="Khoảnh khắc kỷ niệm 5 của tụi mình" loading="lazy">
@@ -618,7 +754,7 @@
           </button>
         </article>
 
-        <article class="item fade">
+        <article class="item fade" data-item-id="photo_6">
           <button class="item-button" type="button" data-image="https://drive.google.com/thumbnail?id=19YoalCICexHzCFE1lu4ApyhHCwgBCM_g&sz=w1200" aria-label="Xem ảnh kỷ niệm 6">
             <figure>
               <img src="https://drive.google.com/thumbnail?id=19YoalCICexHzCFE1lu4ApyhHCwgBCM_g&sz=w1200" alt="Khoảnh khắc kỷ niệm 6 của tụi mình" loading="lazy">
@@ -634,28 +770,28 @@
       <p class="section-desc">Những đoạn video ngắn nhưng đủ để giữ lại cảm giác của những ngày thật vui.</p>
 
       <div class="video-grid">
-        <article class="video-item fade">
+        <article class="video-item fade" data-item-id="video_1">
           <figure>
             <iframe src="https://drive.google.com/file/d/1tm5m6hMulteZQO2ZAfWo38B1yTB67slG/preview" allow="autoplay"></iframe>
             <figcaption class="caption">Một đoạn video dễ thương để xem lại nhiều lần.</figcaption>
           </figure>
         </article>
 
-        <article class="video-item fade">
+        <article class="video-item fade" data-item-id="video_2">
           <figure>
             <iframe src="https://drive.google.com/file/d/1IKVcePi0faqs7GESKXDfupbMXkfllRcH/preview" allow="autoplay"></iframe>
             <figcaption class="caption">Ký ức nhỏ nhưng luôn đáng nhớ.</figcaption>
           </figure>
         </article>
 
-        <article class="video-item fade">
+        <article class="video-item fade" data-item-id="video_3">
           <figure>
             <iframe src="https://drive.google.com/file/d/1DK0_StHx6t8TPYr2VpcZ9P_bxXw7-QOP/preview" allow="autoplay"></iframe>
             <figcaption class="caption">Mỗi lần xem lại là thấy vui hơn.</figcaption>
           </figure>
         </article>
 
-        <article class="video-item fade">
+        <article class="video-item fade" data-item-id="video_4">
           <figure>
             <iframe src="https://drive.google.com/file/d/1zySOZsoP7AnhXPf0teeGFVE9ArKHXZhl/preview" allow="autoplay"></iframe>
             <figcaption class="caption">Một đoạn nhỏ cho những ngày nhớ nhau.</figcaption>
@@ -690,6 +826,7 @@
     Trình duyệt của bạn không hỗ trợ phát âm thanh.
   </audio>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
 
     const correctAnswer = 'Kim Thị Xuân Đào';
@@ -873,6 +1010,183 @@
     });
 
     window.addEventListener('scroll', showOnScroll);
+
+    const SUPABASE_URL = 'https://bfjotiijxcmkswrpfuay.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_r9HBFpC_tlI9lDY4hSrdcQ_2W3gLiiC';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    function createSocialBox(itemId) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'social-box';
+      wrapper.innerHTML = `
+        <div class="social-top">
+          <button class="like-button" type="button" data-role="like-button">❤️ <span>Thả tim</span> <span data-role="like-count">0</span></button>
+          <span class="comment-count" data-role="comment-count">0 bình luận</span>
+        </div>
+        <div class="comments-list" data-role="comments-list">
+          <div class="comment-empty">Đang tải bình luận...</div>
+        </div>
+        <form class="comment-form" data-role="comment-form">
+          <textarea class="comment-textarea" name="content" maxlength="300" placeholder="Để lại một lời thương ở đây nhé..." required></textarea>
+          <button class="comment-submit" type="submit">Gửi bình luận</button>
+          <div class="comment-status" data-role="comment-status"></div>
+        </form>
+      `;
+      wrapper.dataset.itemId = itemId;
+      return wrapper;
+    }
+
+    function formatCommentCount(count) {
+      return `${count} bình luận`;
+    }
+
+    function renderComments(listEl, countEl, comments) {
+      listEl.innerHTML = '';
+
+      if (!comments.length) {
+        const empty = document.createElement('div');
+        empty.className = 'comment-empty';
+        empty.textContent = 'Chưa có bình luận nào nè ❤️';
+        listEl.appendChild(empty);
+      } else {
+        comments.forEach(comment => {
+          const item = document.createElement('div');
+          item.className = 'comment-item';
+
+          const text = document.createElement('div');
+          text.className = 'comment-text';
+          text.textContent = comment.content || '';
+
+          item.appendChild(text);
+          listEl.appendChild(item);
+        });
+      }
+
+      countEl.textContent = formatCommentCount(comments.length);
+    }
+
+    async function loadLikeCount(itemId, socialBox) {
+      const likeCountEl = socialBox.querySelector('[data-role="like-count"]');
+
+      const { data, error } = await supabaseClient
+        .from('media_likes')
+        .select('like_count')
+        .eq('item_id', itemId)
+        .maybeSingle();
+
+      if (error) {
+        likeCountEl.textContent = '0';
+        return;
+      }
+
+      likeCountEl.textContent = data?.like_count ?? 0;
+    }
+
+    async function loadComments(itemId, socialBox) {
+      const listEl = socialBox.querySelector('[data-role="comments-list"]');
+      const countEl = socialBox.querySelector('[data-role="comment-count"]');
+
+      const { data, error } = await supabaseClient
+        .from('media_comments')
+        .select('author_name, content, created_at')
+        .eq('item_id', itemId)
+        .order('created_at', { ascending: true });
+
+      if (error) {
+        listEl.innerHTML = '<div class="comment-empty">Chưa tải được bình luận, thử lại sau nha.</div>';
+        countEl.textContent = formatCommentCount(0);
+        return;
+      }
+
+      renderComments(listEl, countEl, data || []);
+    }
+
+    async function handleLike(itemId, socialBox) {
+      const button = socialBox.querySelector('[data-role="like-button"]');
+      const likeCountEl = socialBox.querySelector('[data-role="like-count"]');
+      const current = Number(likeCountEl.textContent) || 0;
+
+      button.disabled = true;
+
+      const { error } = await supabaseClient
+        .from('media_likes')
+        .update({ like_count: current + 1 })
+        .eq('item_id', itemId);
+
+      if (!error) {
+        likeCountEl.textContent = current + 1;
+      }
+
+      button.disabled = false;
+    }
+
+    async function handleCommentSubmit(event, itemId, socialBox) {
+      event.preventDefault();
+
+      const form = event.currentTarget;
+      const statusEl = socialBox.querySelector('[data-role="comment-status"]');
+      const submitButton = form.querySelector('.comment-submit');
+      const contentInput = form.querySelector('textarea[name="content"]');
+
+      const content = contentInput.value.trim();
+
+      statusEl.textContent = '';
+      statusEl.classList.remove('error');
+
+      if (!content) {
+        statusEl.textContent = 'Viết một lời thương giúp anh nha.';
+        statusEl.classList.add('error');
+        return;
+      }
+
+      submitButton.disabled = true;
+      statusEl.textContent = 'Đang gửi bình luận...';
+
+      const { error } = await supabaseClient
+        .from('media_comments')
+        .insert({
+          item_id: itemId,
+          author_name: 'Người thương',
+          content
+        });
+
+      if (error) {
+        statusEl.textContent = 'Gửi chưa được rồi, mình thử lại một chút nhé.';
+        statusEl.classList.add('error');
+        submitButton.disabled = false;
+        return;
+      }
+
+      contentInput.value = '';
+      statusEl.textContent = 'Đã gửi bình luận rồi đó ❤️';
+
+      await loadComments(itemId, socialBox);
+      submitButton.disabled = false;
+    }
+
+    async function setupSocialFeatures() {
+      const mediaCards = document.querySelectorAll('.item[data-item-id], .video-item[data-item-id]');
+
+      mediaCards.forEach(card => {
+        if (card.querySelector('.social-box')) return;
+
+        const itemId = card.dataset.itemId;
+        const socialBox = createSocialBox(itemId);
+        card.appendChild(socialBox);
+
+        const likeButton = socialBox.querySelector('[data-role="like-button"]');
+        const commentForm = socialBox.querySelector('[data-role="comment-form"]');
+
+        likeButton.addEventListener('click', () => handleLike(itemId, socialBox));
+        commentForm.addEventListener('submit', event => handleCommentSubmit(event, itemId, socialBox));
+
+        loadLikeCount(itemId, socialBox);
+        loadComments(itemId, socialBox);
+      });
+    }
+
+    setupSocialFeatures();
+
   </script>
 </body>
 </html>
