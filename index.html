@@ -1153,7 +1153,12 @@
       });
 
       if (error) {
-        statusEl.textContent = error.message || 'Gửi chưa được rồi, mình thử lại một chút nhé.';
+        const friendlyMessage =
+          error.message === 'Edge Function returned a non-2xx status code'
+            ? 'Em chờ 1 chút rồi bấm gửi lại nhé ❤️'
+            : (error.message || 'Em chờ 1 chút rồi bấm gửi lại nhé ❤️');
+
+        statusEl.textContent = friendlyMessage;
         statusEl.classList.add('error');
         submitButton.disabled = false;
         return;
